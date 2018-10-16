@@ -1,0 +1,4 @@
+pickledb
+flask
+flask_restful
+redis
