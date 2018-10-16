@@ -1,5 +1,7 @@
 from flask import Flask
-from flask_restful import Resource, Api
+from flask_restful import Resource, Api, reqparse
+
+
 
 '''
 flask -> pip install flask
@@ -9,6 +11,7 @@ run server dengan python Service.py
 
 #gunakan model Persons_Model 
 from Persons_Model import *
+parser = reqparse.RequestParser()
 
 p_model = Persons_Model()
 
@@ -20,7 +23,6 @@ class PersonList(Resource):
 		return p_model.list()
 	def post(self):
 		args = parser.parse_args()
-		data = args['data']
 		return p_model.add(data)
 
 class Person(Resource):
