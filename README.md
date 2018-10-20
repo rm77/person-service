@@ -75,3 +75,44 @@ royyana@royyana-desktop:~$ curl  http://127.0.0.1:5000/personlist -X POST -d 'da
 {
     "uid": "7c0c2284-d417-11e8-82c8-f44d306426ad"
 }
+
+
+Dockerized version:
+
+build image:
+docker build -t person_service .
+
+run image into container
+-container 1
+docker run -d --name person1 person_service
+-container 2
+docker run -d --name person2 person_service
+-container 3
+docker run -d --name person3 person_service
+
+
+
+melihat container yang aktif
+docker ps --all
+CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS               NAMES
+55f234c9168d        person_service      "python /usr/src/a..."   4 seconds ago        Up 4 seconds        5000/tcp            person2
+34a0e6d58c8a        person_service      "python /usr/src/a..."   About a minute ago   Up About a minute   5000/tcp            person1
+
+
+masing-masing akan mempunyai ip address dan bertindak sebagai instance yang berdiri sendiri
+
+untuk melihat ip address dari masing-masing container
+ docker inspect --format "{{ .Id }} {{ .Name }} {{ .NetworkSettings.IPAddress }}" $(docker ps  -q)
+55f234c9168d687b1e2641e4336484575c896157d2306a6f3ac6cc9bb655ff2f /person2 172.17.0.3
+34a0e6d58c8af0337a6f9b2a32ae6d14399b498a58ef60208f03f5c5f630fc49 /person1 172.17.0.2
+
+gunakan container person1 untuk mencoba service tsb
+root@royyana-desktop:~# curl  http://172.17.0.2:5000/personlist -X POST -d 'data={ "nama" : "Mr John 3"}'
+{
+    "uid": "aa4325e1-d41b-11e8-864b-0242ac110002"
+}
+root@royyana-desktop:~# curl  http://172.17.0.2:5000/person/aa4325e1-d41b-11e8-864b-0242ac110002
+{
+    "nama": "Mr John 3"
+}
+root@royyana-desktop:~#
