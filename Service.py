@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
-
+import json
 
 
 '''
@@ -11,18 +11,22 @@ run server dengan python Service.py
 
 #gunakan model Persons_Model 
 from Persons_Model import *
-parser = reqparse.RequestParser()
 
 p_model = Persons_Model()
 
 app = Flask(__name__)
 api = Api(app)
 
+parser = reqparse.RequestParser()
+parser.add_argument('data')
+
+
 class PersonList(Resource):
 	def get(self,id=''):
 		return p_model.list()
 	def post(self):
 		args = parser.parse_args()
+		data = json.loads(args['data'])
 		return p_model.add(data)
 
 class Person(Resource):
@@ -35,7 +39,7 @@ class Person(Resource):
 api.add_resource(PersonList,'/personlist')
 api.add_resource(Person,'/person/<id>')
 if __name__ == '__main__':
-	app.run(debug=True)
+	app.run(host='0.0.0.0',debug=True)
 
 
 		

@@ -17,6 +17,10 @@ run service dengan :
 python Service.py
 
 
+atau lihat file requirements.txt
+instalasi dependensi dengan pip install -r requirements.txt
+
+
 Persons.py
 
 merupakan implementasi data model yang berhubungan dengan class Person
@@ -66,3 +70,8 @@ Royyanas-MacBook-Pro:komputasi_awan royyana$ curl http://localhost:5000/person/e
 }
 
 
+- untuk menambah data 
+royyana@royyana-desktop:~$ curl  http://127.0.0.1:5000/personlist -X POST -d 'data={ "nama": "John 4"}'
+{
+    "uid": "7c0c2284-d417-11e8-82c8-f44d306426ad"
+}
