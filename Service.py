@@ -1,5 +1,7 @@
 from flask import Flask
-from flask_restful import Resource, Api
+from flask_restful import Resource, Api, reqparse
+import json
+
 
 '''
 flask -> pip install flask
@@ -15,12 +17,16 @@ p_model = Persons_Model()
 app = Flask(__name__)
 api = Api(app)
 
+parser = reqparse.RequestParser()
+parser.add_argument('data')
+
+
 class PersonList(Resource):
 	def get(self,id=''):
 		return p_model.list()
 	def post(self):
 		args = parser.parse_args()
-		data = args['data']
+		data = json.loads(args['data'])
 		return p_model.add(data)
 
 class Person(Resource):

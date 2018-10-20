@@ -16,9 +16,11 @@ class Persons_Model(object):
 		except KeyError:
 			self.db.dcreate('persondb')
 	def add(self,p):
-		id = uuid.uuid1()	
-		self.db.dadd('persondb',( "{}" .  format(str(id)) ,  p ))
-		return self.db.get(id)
+		if not isinstance(p,dict):
+			return { "result" : "ERROR" }
+		uid = uuid.uuid1()	
+		self.db.dadd('persondb',( "{}" .  format(str(uid)) ,  p ))
+		return { "uid" : "{}" . format(str(uid)) }
 	def list(self):
 		return self.db.dgetall('persondb')
 	def get(self,id):
@@ -38,12 +40,13 @@ class Persons_Model(object):
 if __name__ == '__main__':
 	p = Persons_Model()
 	p.empty()
+	print p.list()
 	p.add({'nama': 'Royyana', 'alamat': 'Ketintang'})
 	p.add({'nama': 'Ananda', 'alamat': 'SMP 6'})
 	p.add({'nama': 'Ibrahim', 'alamat': 'TK Perwanida'})
-	#print p.list()
+	print p.list()
 	#p.empty()
 	#print p.list()
-	p.add({'nama': 'Azam', 'alamat': 'SD Alfalah Surabaya'})
-	print p.list()
+	#p.add({'nama': 'Azam', 'alamat': 'SD Alfalah Surabaya'})
+	#print p.list()
 

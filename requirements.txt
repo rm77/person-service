@@ -1,4 +1,4 @@
-pickledb
 flask
 flask_restful
 uuid
+pickledb
