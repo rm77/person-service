@@ -143,3 +143,23 @@ Deleted: sha256:a7449d2b07c24263dcbfe494401357cad1eeda17b0187d9b28907069f172e0b3
 Deleted: sha256:4d6e2b7f010af035a1532c99a819b7056a528417d414c353a396413727bd69a0
 Deleted: sha256:3f485cbbad079619ed9604aab34e9e8d6652c2414222cb707871a061320fe990
 Deleted: sha256:9d64d0ad169c034068e8bc524afdf08d1b6c2a82810f06ee7f327c896a883596
+
+
+
+- untuk membangun load balancer dengan reverse proxy
+
+cd reverseproxy
+docker build -t nginx-reverseproxy .
+
+
+- jalankan reverse proxy
+docker run -d -p 9999:8080 --name reverse nginx-reverseproxy
+
+- reverseproxy akan berjalan di port9999
+untuk mencoba
+curl http://host:9999/version
+{
+    "info": "0.01"
+}
+
+

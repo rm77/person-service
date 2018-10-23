@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
 import json
-
+import os
 
 '''
 flask -> pip install flask
@@ -35,7 +35,14 @@ class Person(Resource):
 	def delete(self,id):
 		return p_model.remove(id)
 
+class Version(Resource):
+	def get(self):
+		iplist = os.popen("ifconfig eth0 | grep 'inet addr'").readlines()
+		my_ip = "".join(iplist)
+		return { 'info' : '0.01', 'ip' : "{}" . format(my_ip)  }
 
+
+api.add_resource(Version,'/version')
 api.add_resource(PersonList,'/personlist')
 api.add_resource(Person,'/person/<id>')
 if __name__ == '__main__':

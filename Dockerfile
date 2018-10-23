@@ -17,6 +17,7 @@ COPY *.db /usr/src/app/
 
 # tell the port number the container should expose
 EXPOSE 5000
+WORKDIR /usr/src/app
 
 # run the application
 CMD ["python", "/usr/src/app/Service.py"]
