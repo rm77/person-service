@@ -1,14 +1,8 @@
 from flask import Flask
 from flask_restful import Resource, Api
 
-'''
-flask -> pip install flask
-flask_restful -> pip install flask_restful
-run server dengan python Service.py
-'''
-
-#gunakan model Persons_Model 
 from Persons_Model import *
+from Users_Model import *
 
 p_model = Persons_Model()
 
@@ -28,6 +22,10 @@ class Person(Resource):
 		return p_model.get(id)
 	def delete(self,id):
 		return p_model.remove(id)
+
+class Auth(Resource):
+	def post(self):
+		
 
 
 api.add_resource(PersonList,'/personlist')
