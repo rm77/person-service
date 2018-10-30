@@ -41,7 +41,7 @@ if __name__ == '__main__':
 	auth = Auth_Model()
 	token = auth.login('slamet','kaoskakimerah')
 	print token
-	time.sleep(2)
+	#time.sleep(2)
 	cek = auth.cek_token(token)
 	print cek
 	#cek will be None if token is expired

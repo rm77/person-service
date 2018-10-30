@@ -3,6 +3,7 @@ from flask_restful import Resource, Api, reqparse
 import json
 import os
 from Persons_Model import *
+from Auth_Model import *
 
 p_model = Persons_Model()
 
@@ -32,12 +33,28 @@ class Version(Resource):
 		my_ip = "".join(iplist)
 		return { 'info' : '0.01', 'ip' : "{}" . format(my_ip)  }
 
-
-
+class Auth(Resource):
+	def post(self):
+		args = parser.parse_args()
+		data = json.loads(args['data'])
+		username = data['username']
+		password = data['password']
+		auth_model = Auth_Model()
+		auth_result = auth_model.login(username,password)
+		print auth_result
+		if (auth_result is not None):
+			return auth_result
+		else:
+			return { 'status': 'ERROR' }
+	def get(self,token):
+		return auth_model.cek_token(token)
 
 api.add_resource(Version,'/version')
 api.add_resource(PersonList,'/personlist')
 api.add_resource(Person,'/person/<id>')
+
+api.add_resource(Auth,'/auth')
+
 if __name__ == '__main__':
 	app.run(host='0.0.0.0',debug=True)
 
