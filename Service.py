@@ -41,13 +41,21 @@ class Auth(Resource):
 		password = data['password']
 		auth_model = Auth_Model()
 		auth_result = auth_model.login(username,password)
-		print auth_result
+		return {'status' : 'OK'}
+		#print auth_result
+		#if (auth_result is not None):
+	#		return { 'status' : 'OK' }
+	#	else:
+#			return { 'status': 'ERROR' }
+	def get(self,token=''):
+		if (token==''):
+			return { 'status' : 'OK' }
+		auth_model = Auth_Model()
+		auth_result = auth_model.cek_token(token)
 		if (auth_result is not None):
-			return auth_result
+			return {'status' : 'OK'}
 		else:
-			return { 'status': 'ERROR' }
-	def get(self,token):
-		return auth_model.cek_token(token)
+			return { 'status' : 'ERROR' }
 
 api.add_resource(Version,'/version')
 api.add_resource(PersonList,'/personlist')
