@@ -71,7 +71,8 @@ Royyanas-MacBook-Pro:komputasi_awan royyana$ curl http://localhost:5000/person/e
 
 
 - untuk menambah data 
-royyana@royyana-desktop:~$ curl  http://127.0.0.1:5000/personlist -X POST -d 'data={ "nama": "John 4"}'
+
+royyana@royyana-desktop:~$ curl  http://127.0.0.1:5000/personlist -X POST -d '{ "nama": "John 4"}'
 {
     "uid": "7c0c2284-d417-11e8-82c8-f44d306426ad"
 }
@@ -107,7 +108,7 @@ untuk melihat ip address dari masing-masing container
 34a0e6d58c8af0337a6f9b2a32ae6d14399b498a58ef60208f03f5c5f630fc49 /person1 172.17.0.2
 
 gunakan container person1 untuk mencoba service tsb
-root@royyana-desktop:~# curl  http://172.17.0.2:5000/personlist -X POST -d 'data={ "nama" : "Mr John 3"}'
+root@royyana-desktop:~# curl  http://172.17.0.2:5000/personlist -X POST -d '{ "nama" : "Mr John 3"}'
 {
     "uid": "aa4325e1-d41b-11e8-864b-0242ac110002"
 }
@@ -172,3 +173,8 @@ docker-compose scale personservice=5
 
 - untuk mematikan
 docker-compose down
+
+
+Authentikasi
+
+

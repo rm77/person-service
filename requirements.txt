@@ -4,3 +4,4 @@ redis
 pyjwt
 uuid
 pickledb
+gevent

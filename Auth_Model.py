@@ -19,7 +19,6 @@ class Auth_Model(object):
 		self.username = ''
 		self.password = ''
 	def login(self,username,password):
-		print "wedus"
 		self.username = username
 		self.password = password
 		users = Users_Model()
@@ -29,12 +28,12 @@ class Auth_Model(object):
 		if (user_detail is not None):
 			return Token_Model(user_detail).get_encoded()
 		else:
-			return ''
+			return None
 	def cek_token(self,data):
 		try:
 			return Token_Model(data).get_decoded()
 		except jwt.ExpiredSignatureError:
-			return ''
+			return None
 
 
 

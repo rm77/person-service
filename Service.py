@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,request,jsonify
 from flask_restful import Resource, Api, reqparse
 import json
 import os
@@ -10,15 +10,11 @@ p_model = Persons_Model()
 app = Flask(__name__)
 api = Api(app)
 
-parser = reqparse.RequestParser()
-parser.add_argument('data')
-
 class PersonList(Resource):
 	def get(self,id=''):
 		return p_model.list()
 	def post(self):
-		args = parser.parse_args()
-		data = json.loads(args['data'])
+		data =  request.get_json(force=True)
 		return p_model.add(data)
 
 class Person(Resource):
@@ -35,37 +31,39 @@ class Version(Resource):
 
 class Auth(Resource):
 	def post(self):
-		args = parser.parse_args()
-		data = json.loads(args['data'])
+		data = request.get_json(force=True)
 		username = data['username']
 		password = data['password']
-		auth_model = Auth_Model()
-		auth_result = auth_model.login(username,password)
-		return {'status' : 'OK'}
-		#print auth_result
-		#if (auth_result is not None):
-	#		return { 'status' : 'OK' }
-	#	else:
-#			return { 'status': 'ERROR' }
+		a_model = Auth_Model()
+		auth_result = a_model.login(username,password)
+		if (auth_result is not None):
+			return jsonify(status='OK',token=auth_result)
+		else:
+			return jsonify(status='ERROR',token=None)
 	def get(self,token=''):
 		if (token==''):
-			return { 'status' : 'OK' }
-		auth_model = Auth_Model()
-		auth_result = auth_model.cek_token(token)
+			return jsoninfy(status='ERROR')
+		a_model = Auth_Model()
+		auth_result = a_model.cek_token(token)
 		if (auth_result is not None):
-			return {'status' : 'OK'}
+			return jsonify(status='OK',token=auth_result)
 		else:
-			return { 'status' : 'ERROR' }
+			return jsoninfy(status='ERROR')
 
+
+#definisi rest api interface
 api.add_resource(Version,'/version')
 api.add_resource(PersonList,'/personlist')
 api.add_resource(Person,'/person/<id>')
-
 api.add_resource(Auth,'/auth')
 
-if __name__ == '__main__':
-	app.run(host='0.0.0.0',debug=True)
 
+
+# menjalankan web server
+
+from gevent.pywsgi import WSGIServer
+http_server = WSGIServer(('', 5000),app)
+http_server.serve_forever()
 
 		
 
