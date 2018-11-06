@@ -177,4 +177,22 @@ docker-compose down
 
 Authentikasi
 
-
+$ curl -v http://localhost:5000/auth -X POST -d '{ "username" : "slamet"  , "password" : "kaoskakimerah123" }'
+Note: Unnecessary use of -X or --request, POST is already inferred.
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 5000 (#0)
+> POST /auth HTTP/1.1
+> Host: localhost:5000
+> User-Agent: curl/7.54.0
+> Accept: */*
+> Content-Length: 60
+> Content-Type: application/x-www-form-urlencoded
+>
+* upload completely sent off: 60 out of 60 bytes
+< HTTP/1.1 200 OK
+< Content-Type: application/json
+< Content-Length: 267
+< Date: Tue, 06 Nov 2018 01:45:11 GMT
+<
+{"status":"OK","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNsYW1ldCIsInBhc3N3b3JkIjoia2Fvc2tha2ltZXJhaCIsImRldGFpbCI6eyJuYW1hIjoiU2xhbWV0IFJhaGFyam8iLCJhbGFtYXQiOiJNZW50ZW5nIn0sImV4cCI6MTU0MTQ2ODcxNn0.lk2xnx7RbFZp-X7BetS3LH7mMRDmZ5-yHaK8uepywEI"}
