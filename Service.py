@@ -10,29 +10,48 @@ p_model = Persons_Model()
 app = Flask(__name__)
 api = Api(app)
 
+
+
 class PersonList(Resource):
-	def get(self,id=''):
-		return p_model.list()
+        def auth_cek(self):
+            self.token = request.headers.get('Authorization') or ''
+            self.cek = Auth_Model().cek_token(self.token)
+	    if (self.cek is None):
+                return {'STATUS' : 'Error Authentication'}
+            else:
+                return None
+
+        def get(self,id=''):
+		return self.auth_cek() or p_model.list()
 	def post(self):
-		data =  request.get_json(force=True)
-		return p_model.add(data)
+                args = request.get_json(force=True)
+                data = args
+		return self.auth_cek() or p_model.add(data)
 
 class Person(Resource):
+        def auth_cek(self):
+            self.token = request.headers.get('Authorization') or ''
+            self.cek = Auth_Model().cek_token(self.token)
+	    if (self.cek is None):
+                return {'STATUS' : 'Error Authentication'}
+            else:
+                return None
+
 	def get(self,id):
-		return p_model.get(id)
+		return self.auth_cek() or p_model.get(id)
 	def delete(self,id):
-		return p_model.remove(id)
+		return self.auth_cek() or p_model.remove(id)
 
 class Version(Resource):
 	def get(self):
 		iplist = os.popen("ifconfig eth0 | grep 'inet addr'").readlines()
 		my_ip = "".join(iplist)
-		return { 'info' : '0.01', 'ip' : "{}" . format(my_ip)  }
+                return { 'info' : '0.01', 'ip' : "{}" . format(my_ip) }
 
 class Auth(Resource):
 	def post(self):
 		data = request.get_json(force=True)
-		username = data['username']
+		username = data['username'] 
 		password = data['password']
 		a_model = Auth_Model()
 		auth_result = a_model.login(username,password)

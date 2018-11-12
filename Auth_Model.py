@@ -30,11 +30,12 @@ class Auth_Model(object):
 		else:
 			return None
 	def cek_token(self,data):
+                if data=='':
+                    return None
 		try:
 			return Token_Model(data).get_decoded()
 		except jwt.ExpiredSignatureError:
 			return None
-
 
 
 if __name__ == '__main__':
