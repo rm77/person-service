@@ -42,7 +42,7 @@ class Auth(Resource):
 			return jsonify(status='ERROR',token=None)
 	def get(self,token=''):
 		if (token==''):
-			return jsoninfy(status='ERROR')
+			return jsonify(status='ERROR')
 		a_model = Auth_Model()
 		auth_result = a_model.cek_token(token)
 		if (auth_result is not None):

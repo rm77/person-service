@@ -23,7 +23,7 @@ class Auth_Model(object):
 		self.password = password
 		users = Users_Model()
 		user_detail = users.find(self.username)
-		token_expiration = datetime.datetime.utcnow() + datetime.timedelta(seconds=5)
+		token_expiration = datetime.datetime.utcnow() + datetime.timedelta(seconds=60)
 		user_detail['exp']=token_expiration
 		if (user_detail is not None):
 			return Token_Model(user_detail).get_encoded()
