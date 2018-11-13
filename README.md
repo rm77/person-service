@@ -171,6 +171,7 @@ docker-compose up -d
 - untuk scale
 docker-compose scale personservice=5
 
+
 - untuk mematikan
 docker-compose down
 
