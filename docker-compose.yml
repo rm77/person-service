@@ -1,8 +1,14 @@
 version: '2'
 services:
   reverseproxy:
+     container_name: balancer
      image: nginx-reverseproxy
+     links: 
+        - redis
      ports: 
         - "9999:8080"
+  redis:
+      image: redis
+      container_name: redis_server
   personservice:
       image: person_service

@@ -1,8 +1,8 @@
 # our base image
-FROM alpine:3.8
+FROM alpine
 
 # Install python and pip
-RUN apk add --update musl linux-headers build-base py2-pip gcc python-dev libffi-dev libevent-dev
+RUN apk update && apk add musl linux-headers build-base py2-pip gcc python-dev libffi-dev libevent-dev
 
 # upgrade pip
 RUN pip install --upgrade pip

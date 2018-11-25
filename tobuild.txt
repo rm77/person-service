@@ -1,0 +1,7 @@
+cd person-service-container
+docker build -t person_service .
+cd ..
+cd reverseproxy
+docker build -t nginx-reverseproxy .
+cd ..
+
