@@ -1,3 +1,6 @@
+
+https://docs.docker.com/get-started/part4/
+
 siapkanlah dua node NODE1 dan NODE2
 
 NODE1
@@ -20,6 +23,12 @@ NODE2
 
 pada konfigurasi ini NODE2 adalah workder bagi NODE1 yang merupakan manager dari swarm
 
+
+ceklah node yang akan terlibat
+
+docker node ls
+
+
 masuklah pada NODE1
 
 git clone https://github.com/rm77/person-service.git
@@ -31,4 +40,16 @@ deploylah service pada swarm
 
 docker stack deploy -c docker-compose.yml personservice
 
+lihatlah status dari service dgn
+
+docker stack ps personservice
+
+untuk melihat apakah workder bekerja
+
+pindahlah ke node2
+jalankan:
+
+docker ps --all
+
+akan terlihat proses yang berjalan
 

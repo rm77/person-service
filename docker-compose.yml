@@ -18,7 +18,7 @@ services:
          placement:
              constraints: [node.role == manager]
   personservice:
-      image: person_service
+      image: royyana/person_service
       deploy:
         mode: replicated 
         replicas: 10
