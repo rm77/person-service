@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   reverseproxy:
      container_name: balancer
@@ -7,8 +7,19 @@ services:
         - redis
      ports: 
         - "9999:8080"
+     deploy:
+        replicas: 1
+        restart_policy:
+           condition: on-failure
   redis:
       image: redis
       container_name: redis_server
+      deploy:
+         placement:
+             constraints: [node.role == manager]
   personservice:
       image: person_service
+      deploy:
+        mode: replicated 
+        replicas: 10
+      
